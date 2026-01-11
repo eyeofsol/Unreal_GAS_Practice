@@ -9,7 +9,7 @@ public class Unreal_GAS_Practice1 : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore",
-        "GameplayAbilities", "GameplayTags", "GameplayTasks"});
+        "GameplayAbilities", "GameplayTags", "GameplayTasks", "Niagara"});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 

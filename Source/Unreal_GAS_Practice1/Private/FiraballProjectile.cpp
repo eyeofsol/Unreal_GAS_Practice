@@ -49,7 +49,10 @@ void AFiraballProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor
 
 			if (FireballEffect)
 			{
-				FGameplayEffectSpecHandle DamageSpec = SourceASC->MakeOutgoingSpec(FireballEffect, 1.0f, SourceASC->MakeEffectContext());
+				FGameplayEffectContextHandle Context = SourceASC->MakeEffectContext();
+				Context.AddHitResult(Hit);
+
+				FGameplayEffectSpecHandle DamageSpec = SourceASC->MakeOutgoingSpec(FireballEffect, 1.0f, Context);
 
 				float FinalDamage = Damage;
 				if (bBurning)
