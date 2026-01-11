@@ -40,9 +40,34 @@ void AFiraballProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor
 	if (OtherActor)
 	{
 		UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OtherActor);
-		if (TargetASC)
+		UAbilitySystemComponent* SourceASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetInstigator());
+
+		if (TargetASC && SourceASC)
 		{
-			UE_LOG(LogTemp, Log, TEXT("Target 어빌리티 시스템 확인"));
+			FGameplayTag BurnTag = FGameplayTag::RequestGameplayTag(FName("State.Burn"));
+			bool bBurning = TargetASC->HasMatchingGameplayTag(BurnTag);
+
+			if (FireballEffect)
+			{
+				FGameplayEffectSpecHandle DamageSpec = SourceASC->MakeOutgoingSpec(FireballEffect, 1.0f, SourceASC->MakeEffectContext());
+
+				float FinalDamage = Damage;
+				if (bBurning)
+					FinalDamage *= 2.0f;
+
+				DamageSpec.Data.Get()->SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName("Ability.Fireball.Damage")), -FinalDamage);
+
+				SourceASC->ApplyGameplayEffectSpecToTarget(*DamageSpec.Data.Get(), TargetASC);
+			}
+
+			if (BurnEffect)
+			{
+				FGameplayEffectContextHandle BurnContext = SourceASC->MakeEffectContext();
+				BurnContext.AddHitResult(Hit);
+
+				FGameplayEffectSpecHandle BurnSpec = SourceASC->MakeOutgoingSpec(BurnEffect, 1.0f, BurnContext);
+				SourceASC->ApplyGameplayEffectSpecToTarget(*BurnSpec.Data.Get(), TargetASC);
+			}
 		}
 	}
 	Destroy(); // 부딪히면 파괴

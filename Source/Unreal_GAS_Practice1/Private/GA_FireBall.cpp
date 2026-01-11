@@ -23,11 +23,17 @@ void UGA_FireBall::ActivateAbility(const FGameplayAbilitySpecHandle Handle, cons
 		FVector SpawnLocation = Owner->GetActorLocation() + Owner->GetActorForwardVector() * 100.0f;
 		FRotator SpawnRotation = Owner->GetActorRotation();
 
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Owner = Owner;
+		SpawnParams.Instigator = Cast<APawn>(Owner);
+		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
 		if (Fireball)
 			GetWorld()->SpawnActor<AFiraballProjectile>(
 				Fireball,
 				SpawnLocation,
-				SpawnRotation
+				SpawnRotation,
+				SpawnParams
 			);
 	}
 

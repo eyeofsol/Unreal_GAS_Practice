@@ -23,6 +23,7 @@ protected:
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
+protected:
 	UPROPERTY(VisibleAnywhere, Category = "Fireball")
 	TObjectPtr<class USphereComponent> Collision = nullptr;
 
@@ -33,9 +34,11 @@ protected:
 	TObjectPtr<class UProjectileMovementComponent> ProjectileMovement = nullptr;
 
 	UPROPERTY(EditAnywhere, Category = "Fireball")
-	TSubclassOf<UGameplayEffect> BurnEffectClass = nullptr;
+	TSubclassOf<UGameplayEffect> BurnEffect = nullptr;
 
 	UPROPERTY(EditAnywhere, Category = "Fireball")
-	TSubclassOf<UGameplayEffect> InstantDamageEffectClass = nullptr;
+	TSubclassOf<UGameplayEffect> FireballEffect = nullptr;
 
+	UPROPERTY(EditAnywhere, Category = "Fireball")
+	float Damage = 10.0f;
 };
