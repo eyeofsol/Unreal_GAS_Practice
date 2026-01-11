@@ -22,4 +22,8 @@ public:
 		const FGameplayAbilityActorInfo* ActorInfo, 
 		const FGameplayAbilityActivationInfo ActivationInfo, 
 		const FGameplayEventData* TriggerEventData) override;
+
+protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Fireball")
+	TSubclassOf<class AFiraballProjectile> Fireball = nullptr;
 };

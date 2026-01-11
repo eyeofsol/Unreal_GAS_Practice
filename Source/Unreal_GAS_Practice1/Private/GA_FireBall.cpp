@@ -2,6 +2,7 @@
 
 
 #include "GA_FireBall.h"
+#include "FiraballProjectile.h"
 
 UGA_FireBall::UGA_FireBall()
 {
@@ -22,8 +23,12 @@ void UGA_FireBall::ActivateAbility(const FGameplayAbilitySpecHandle Handle, cons
 		FVector SpawnLocation = Owner->GetActorLocation() + Owner->GetActorForwardVector() * 100.0f;
 		FRotator SpawnRotation = Owner->GetActorRotation();
 
-		// 여기서 FireballProjectile을 스폰합니다.
-		// GetWorld()->SpawnActor<AFireballProjectile>(...);
+		if (Fireball)
+			GetWorld()->SpawnActor<AFiraballProjectile>(
+				Fireball,
+				SpawnLocation,
+				SpawnRotation
+			);
 	}
 
 	EndAbility(Handle, ActorInfo, ActivationInfo, true, false);
