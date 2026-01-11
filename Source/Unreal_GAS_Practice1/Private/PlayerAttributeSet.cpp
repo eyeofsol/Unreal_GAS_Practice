@@ -12,6 +12,8 @@ UPlayerAttributeSet::UPlayerAttributeSet()
 
 void UPlayerAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
 {
+	Super::PreAttributeChange(Attribute, NewValue);
+
 	if (Attribute == GetManaAttribute())
 	{
 		NewValue = FMath::Clamp(NewValue, 0.0f, GetMaxMana());
